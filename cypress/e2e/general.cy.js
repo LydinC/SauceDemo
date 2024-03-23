@@ -3,14 +3,16 @@ import commonPage from '../POM/Pages/commonPage';
 
 describe('Verify Common Logged In Functionality', () => {
 
-    beforeAll(() => {
-       cy.visit('/');
-       loginPage.login("standard_user", "secret_sauce");
-    }
-    )
+    before(() => {
+
+    })
+
     beforeEach(() => {
-       cy.visit('/inventory.html');
-      })
+      cy.visit('');
+      loginPage.login("standard_user", "secret_sauce");
+      commonPage.verifyUserIsLoggedIn();
+      //commonPage.navigateTo('all_items');
+    })
   
     it('Verify all expected menu options are available', () => { 
         commonPage.openMenu();

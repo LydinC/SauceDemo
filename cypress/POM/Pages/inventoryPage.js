@@ -1,11 +1,15 @@
+import commonPage from '../Pages/commonPage';
+
 class inventoryPage{
     
     elements ={
         loginLogo: () => cy.get('.login_logo'),
-        username : () => cy.get('#user-name'),
-        password : () => cy.get('#password'),
-        loginButton : () => cy.get('#login-button'),
-        errorPrompt : () => cy.get('[data-test="error"]')
+        filter : () => cy.get('[data-test="product_sort_container"]')
+    }
+
+
+    verifyUserIsOnInventoryPage(){
+        commonPage.getPageTitle().should('be.visible').and('have.text', 'Products');
     }
 
 }

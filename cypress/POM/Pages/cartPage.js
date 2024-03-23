@@ -1,7 +1,8 @@
+import commonPage from '../Pages/commonPage';
+
 class cartPage{
     
     elements ={
-        title: () => cy.get('.title'),
         continueShoppingButton: () => cy.get('#continue-shopping'),
         checkoutButton: () => cy.get('#checkout'),
         //errorPrompt : () => cy.get()
@@ -13,6 +14,10 @@ class cartPage{
 
     clickCheckout(){
         this.elements.checkoutButton.click();
+    }
+
+    verifyPageTitle(){
+        commonPag.getPageTitle().should('be.visible').and('have.text', 'Your Cart');
     }
 }
 
