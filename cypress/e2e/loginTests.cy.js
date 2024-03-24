@@ -15,7 +15,7 @@ describe('Verify Login Page Functionality', () => {
     it('Verify user can login successfully with valid credentials', () => {
         loginPage.login('standard_user', 'secret_sauce');
         commonPage.verifyUserIsLoggedIn();
-        //inventoryPage.verifyUserIsOnInventoryPage();
+        inventoryPage.verifyUserIsOnInventoryPage();
       })
 
     it('Verify locked-out user cannot login', () => {

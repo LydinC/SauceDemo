@@ -5,21 +5,21 @@ class checkoutInfoPage{
     elements ={
         firstName: () => cy.get('[data-test="firstName"]'),
         lastName: () => cy.get('[data-test="lastName"]'),
-        firstName: () => cy.get('[data-test="postalCode"]'),
+        postalCode: () => cy.get('[data-test="postalCode"]'),
         cancelButton: ()  => cy.get('[data-test="cancel"]'),
         continueButton: ()  => cy.get('[data-test="continue"]'),
         errorMessage:()  => cy.get('[data-test="error"]'),
     }
 
-    inputDetails(firstName, lastName, zipCode){    
+    inputDetails(firstName, lastName, postalCode){    
         if(firstName){
-            this.elements.firstName.type(firstName);
+            this.elements.firstName().type(firstName);
         }
         if(lastName){
-            this.elements.password().type(lastName);
+            this.elements.lastName().type(lastName);
         }
-        if(zipCode){
-            this.elements.password().type(zipCode);
+        if(postalCode){
+            this.elements.postalCode().type(postalCode);
         }
 
         clickContinue();

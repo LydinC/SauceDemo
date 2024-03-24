@@ -12,17 +12,21 @@ class commonPage{
         appLogo: () => cy.get('.app_logo'),
         
         cartLink: () => cy.get('.shopping_cart_link'),
-        twitterLogo: () => cy.get('.social_twitter'),
-        facebookLogo : () => cy.get('.social_facebook'),
-        linkedInLogo : () => cy.get('.social_linkedin'),
+        cartBadge: () => cy.get('.shopping_cart_badge'),
+
+        twitterLink: () => cy.get('.social_twitter > a'),
+        facebookLink : () => cy.get('.social_facebook > a'),
+        linkedInLink : () => cy.get('.social_linkedin > a'),
         footerText : () => cy.get('.footer_copy'),
     }
     
-    
-    openMenu(){
-        this.elements.burgerMenuIcon().click();
-    }
 
+    openMenu() {
+        this.elements.burgerMenuIcon().click();
+     };
+    closeMenu() {
+        this.elements.burgerMenuCloseIcon().click();
+    };
     //TODO: implement with ENUMS to ensure options
     selectMenuOption(option){
             switch (option) {
@@ -43,21 +47,21 @@ class commonPage{
             }
     }
 
-    closeMenu(){
-        this.elements.burgerMenuCloseIcon().click();
+    verifyCardBadgeNumber(expectedNumber){
+        this.elements.cartBadge().should('be.visible').and('have.text', expectedNumber);
     }
 
-    clickTwitter(){ 
-        this.elements.twitterLogo().click();
+    getLinkedInHRef(){
+        return this.elements.linkedInLink().should('have.attr', 'href');
     }
 
-    clickFacebook(){ 
-        this.elements.facebookLogo().click();
+    getFacebookHRef(){
+        return this.elements.facebookLink().should('have.attr', 'href');
+    }
+    getTwitterHRef(){
+        return this.elements.twitterLink().should('have.attr', 'href');
     }
 
-    clickLinkedIn(){ 
-        this.elements.linkedInLogo().click();
-    }
 
     clickCart(){
         this.elements.clickCart().click();
@@ -77,10 +81,20 @@ class commonPage{
         this.selectMenuOption(option)
         this.closeMenu();
     }
+
+    clickCart(){
+        this.elements.cartLink().click();
+    }
+
     resetAppState(){
         this.openMenu();
         this.selectMenuOption('reset_app');
         this.closeMenu();
+    }
+
+    logout(){
+        this.openMenu();
+        this.selectMenuOption('logout');
     }
 }
 
