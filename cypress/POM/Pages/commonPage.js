@@ -20,13 +20,13 @@ class commonPage{
         footerText : () => cy.get('.footer_copy'),
     }
     
-
     openMenu() {
         this.elements.burgerMenuIcon().click();
      };
     closeMenu() {
         this.elements.burgerMenuCloseIcon().click();
     };
+    
     //TODO: implement with ENUMS to ensure options
     selectMenuOption(option){
             switch (option) {

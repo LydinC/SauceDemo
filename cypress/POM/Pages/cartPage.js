@@ -41,11 +41,16 @@ class cartPage{
         return total;
     }
 
-    verifyItemIsInCartByName(productName){    
-       this.elements.cartItems().each(($item) => {
+    verifyItemIsInCartByName(productName) {
+        let found = false;
+        this.elements.cartItems().each(($item) => {
             cy.wrap($item).find('.inventory_item_name').invoke('text').then((itemName) => {
-                expect(itemName.trim()).to.equal(productName); // Change the expected name as per your requirement
+                if (itemName.trim() === productName) {
+                    found = true;
+                }
             });
+        }).then(() => {
+            expect(found).to.be.true;
         });
     }
 

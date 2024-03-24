@@ -21,8 +21,6 @@ class checkoutInfoPage{
         if(postalCode){
             this.elements.postalCode().type(postalCode);
         }
-
-        clickContinue();
     }
 
     clickCancel(){
