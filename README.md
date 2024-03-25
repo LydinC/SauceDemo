@@ -1,6 +1,6 @@
 **SauceDemo Project**
 
 Tests can be executed using the below commands via terminal
-- npm run all (runs all available tests)
-- npm run anonymous (runs all tests in a logged out state)
-- npm run loggedIn (runs all authenticated tests)
+- _npm run all_ (runs all available tests)
+- _npm run anonymous_ (runs all tests in a logged out state)
+- _npm run loggedIn_ (runs all authenticated tests)
