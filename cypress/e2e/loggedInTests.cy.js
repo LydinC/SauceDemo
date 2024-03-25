@@ -5,30 +5,44 @@ import cartPage from '../POM/Pages/cartPage';
 import checkoutInfoPage from '../POM/Pages/checkoutInfoPage';
 import checkoutOverviewPage from '../POM/Pages/checkoutOverviewPage';
 import checkoutCompletePage from '../POM/Pages/checkoutCompletePage';
-
+import expectedProducts from '../fixtures/products.json'
 
 describe('Verify Common Logged In Functionality', () => {
 
-    before(() => {
-    })
+    let credentials;
+    before( () => 
+      cy.fixture("credentials").then((data)=> {
+        credentials = data;
+    }));
 
     beforeEach(() => {
       cy.visit('');
-      loginPage.login("standard_user", "secret_sauce");
+      loginPage.login(credentials.valid.username, credentials.valid.password);
       commonPage.verifyUserIsLoggedIn();
-      //commonPage.navigateTo('all_items');
     })
   
     afterEach(() => {
     })
 
+    it('Verify all products are displayed with correct details', () => {
+
+      cy.get('.inventory_item').each(($product) => {
+        const name = $product.find('.inventory_item_name').text().trim();
+        const description = $product.find('.inventory_item_desc').text().trim();
+        const price = $product.find('.inventory_item_price').text().trim();
+        const image = $product.find('.inventory_item_img img').attr('src');
+  
+        const productItem = expectedProducts.find(product => product.name === name);
+        
+        expect(productItem).to.exist; //asserting name too
+        expect(description).to.eq(productItem.description);
+        expect(price).to.eq(productItem.price);
+        expect(image).to.eq(productItem.image);
+      });
+    });
+
     it('Verify all expected menu options are available', () => { 
-        commonPage.openMenu();
-        commonPage.elements.allItemsLink().should('be.visible');
-        commonPage.elements.aboutLink().should('be.visible');
-        commonPage.elements.logoutLink().should('be.visible');
-        commonPage.elements.resetAppLink().should('be.visible');
-        commonPage.closeMenu();
+      commonPage.verifyMenuOptions();
     })
     it('Verify Twitter link is correctly set up', () => {
       commonPage.getTwitterHRef().should('eq',"https://twitter.com/saucelabs");
@@ -39,6 +53,11 @@ describe('Verify Common Logged In Functionality', () => {
     it('Verify LinkedIn link is correctly set up', () => {
       commonPage.getLinkedInHRef().should('eq',"https://www.linkedin.com/company/sauce-labs/");
     })
+
+    it('Verify user is able to log out', () => {
+      commonPage.logout();
+      loginPage.verifyUserIsOnLoginPage();
+    });
 
     it('Verify Add Product to Cart', () => {
       inventoryPage.addSLBackPackToCart();
@@ -54,8 +73,7 @@ describe('Verify Common Logged In Functionality', () => {
       cartPage.verifyNoItemsInCart();
     });
 
-
-    it('Verify user can successfully order with multiple products', () => {
+    it('Verify user can successfully checkout multiple products', () => {
       inventoryPage.addSLBackPackToCart();
       inventoryPage.addSLBikeLightToCart();
       commonPage.verifyCardBadgeNumber(2);
@@ -68,23 +86,6 @@ describe('Verify Common Logged In Functionality', () => {
       checkoutOverviewPage.clickFinish();
       checkoutCompletePage.verifyOrderSuccessfull();
     });
-
-    //TODO:fix
-    /*it('Verify Product Details', () => {
-       
-       const productsFixture = require('../fixtures/products.json');
-       const productOnWebsite = inventoryPage.captureInventoryItemsDetails();
-
-       // Iterate over each product and compare with fixture data
-       productOnWebsite.forEach((product, index) => {
-           const productFromFixture = productsFixture[index];
-
-           expect(product.name).to.equal(productFromFixture.name);
-           expect(product.description).to.equal(productFromFixture.description);
-           expect(product.price).to.equal(productFromFixture.price);
-           expect(product.image).to.equal(productFromFixture.image);
-       });
-   });*/
 })
 
 

@@ -18,11 +18,9 @@ class inventoryPage{
         inventoryList : () => cy.get('.inventory_list'),
     }
 
-
     verifyUserIsOnInventoryPage(){
         commonPage.getPageTitle().should('be.visible').and('have.text', 'Products');
     }
-
 
     captureInventoryItemsDetails() {
         const itemsDetails = [];

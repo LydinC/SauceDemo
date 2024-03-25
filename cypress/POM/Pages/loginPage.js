@@ -8,20 +8,25 @@ class loginPage{
         errorPrompt : () => cy.get('[data-test="error"]')
     }
 
-    login(username, password){    
+    login(username, password){
+        this.elements.username().clear();
+        this.elements.password().clear();
+        
         if(username){
-            //adding click and wait due to a phishing scanning plugin enforced on browser's available on dev machine
-            //this.elements.username().click().wait(3000).type(username);
             this.elements.username().type(username);
         }
         if(password){
-            this.elements.password().type(password);
+            this.elements.password().clear().type(password);
         }
         this.elements.loginButton().click();
     }
 
     verifyAlertMessage(expectedMessage){
         this.elements.errorPrompt().should('be.visible').and('have.text', expectedMessage);
+    }
+
+    verifyUserIsOnLoginPage(){
+        this.elements.loginButton().should('be.visible');
     }
 
 }

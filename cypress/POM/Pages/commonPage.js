@@ -20,13 +20,14 @@ class commonPage{
         footerText : () => cy.get('.footer_copy'),
     }
     
+    //Action Methods
+
     openMenu() {
         this.elements.burgerMenuIcon().click();
      };
     closeMenu() {
         this.elements.burgerMenuCloseIcon().click();
     };
-    
     //TODO: implement with ENUMS to ensure options
     selectMenuOption(option){
             switch (option) {
@@ -46,55 +47,58 @@ class commonPage{
                     throw new Error('Menu option provided does not match any of the expected options');
             }
     }
-
     verifyCardBadgeNumber(expectedNumber){
         this.elements.cartBadge().should('be.visible').and('have.text', expectedNumber);
     }
-
     getLinkedInHRef(){
         return this.elements.linkedInLink().should('have.attr', 'href');
     }
-
     getFacebookHRef(){
         return this.elements.facebookLink().should('have.attr', 'href');
     }
     getTwitterHRef(){
         return this.elements.twitterLink().should('have.attr', 'href');
     }
-
-
     clickCart(){
         this.elements.clickCart().click();
     }
-
     getPageTitle(){
         this.elements.pageTitle();
     }
-
-    verifyUserIsLoggedIn(){
-        //Cart icon is visible on all pages following log in
-        this.elements.cartLink().should('be.visible');
-    }
-
     navigateTo(option){
         this.openMenu();
         this.selectMenuOption(option)
         this.closeMenu();
     }
-
     clickCart(){
         this.elements.cartLink().click();
     }
-
     resetAppState(){
         this.openMenu();
         this.selectMenuOption('reset_app');
         this.closeMenu();
     }
-
     logout(){
         this.openMenu();
         this.selectMenuOption('logout');
+    }
+
+    //Assert Methods
+    
+    verifyUserIsLoggedIn(){
+        //Cart icon is visible on all pages following log in
+        this.elements.cartLink().should('be.visible');
+    }
+    verifyUserIsLoggedOut(){
+        this.elements.cartLink().should('not.be.visible');
+    }
+    verifyMenuOptions(){
+        this.openMenu();
+        this.elements.allItemsLink().should('be.visible');
+        this.elements.aboutLink().should('be.visible');
+        this.elements.logoutLink().should('be.visible');
+        this.elements.resetAppLink().should('be.visible');
+        this.closeMenu();
     }
 }
 

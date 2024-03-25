@@ -4,7 +4,9 @@
   "description": "YieldStreet_Assessment",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "anonymous": "cypress run --headed --spec \"cypress/e2e/anonymousTests.cy.js\"",
+    "loggedIn": "cypress run --headed --spec \"cypress/e2e/loggedInTests.cy.js\"",
+    "all": "npm run anonymous && npm run loggedIn"
   },
   "author": "",
   "license": "ISC",
