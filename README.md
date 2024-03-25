@@ -1,4 +1,4 @@
-#SauceDemo Project
+**SauceDemo Project**
 
 Tests can be executed using the below commands via terminal
 - npm run all (runs all available tests)
